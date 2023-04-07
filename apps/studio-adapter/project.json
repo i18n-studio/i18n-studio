@@ -1,0 +1,64 @@
+{
+  "name": "studio-adapter",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/studio-adapter/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/studio-adapter",
+        "main": "apps/studio-adapter/src/main.ts",
+        "tsConfig": "apps/studio-adapter/tsconfig.app.json",
+        "assets": ["apps/studio-adapter/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/studio-adapter/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "studio-adapter:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "studio-adapter:build:development"
+        },
+        "production": {
+          "buildTarget": "studio-adapter:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/studio-adapter/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/studio-adapter/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
