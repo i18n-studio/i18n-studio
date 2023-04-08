@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { Config } from '../../models/Config';
 import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
+import * as process from 'process';
 
 /**
  * Service which handles the usage of the i18n config file.
@@ -46,6 +47,12 @@ export class ConfigService {
       config = {
         ...fileContent,
       };
+    } else {
+      this.logger.info(
+        'ConfigService',
+        'readConfigFile',
+        'config file not found.'
+      );
     }
     return config;
   }
@@ -65,23 +72,34 @@ export class ConfigService {
   private getProjectRoot(): string {
     let projectRoot = null;
     const currentPath = __dirname;
+    const pathDelimiter = this.getPathDelimiter();
 
-    const pathParts = currentPath.split('\\');
+    const pathParts = currentPath.split(pathDelimiter);
 
     // we need a temporary variable, which we pop() every time we iterate over
     // the file system.
-    const pathPartsCopy = currentPath.split('\\');
+    const pathPartsCopy = currentPath.split(pathDelimiter);
 
     pathParts.forEach(() => {
       pathPartsCopy.pop();
-      const buildNewPath = pathPartsCopy.join('\\');
+      const buildNewPath = pathPartsCopy.join(pathDelimiter);
 
-      const currentPathWithNodeModules = `${buildNewPath}\\node_modules`;
+      const currentPathWithNodeModules = `${buildNewPath}${pathDelimiter}node_modules`;
       if (fs.existsSync(currentPathWithNodeModules)) {
         projectRoot = buildNewPath;
       }
     });
 
     return projectRoot;
+  }
+
+  private getPathDelimiter(): string {
+    const platform = process.platform;
+
+    if (platform === 'win32') {
+      return '\\';
+    }
+
+    return '/';
   }
 }

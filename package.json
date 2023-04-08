@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "check-packages": "check-packages --blacklist",
     "nx": "nx",
     "serve:frontend": "nx serve frontend",
     "serve:adapter": "nx serve studio-adapter",
-    "check-packages": "check-packages --blacklist"
+    "test:adapter": "nx test studio-adapter"
   },
   "private": true,
   "dependencies": {
