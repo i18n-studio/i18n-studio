@@ -1,4 +1,5 @@
-# i18n-studio
+# i18n-studio 
+[![test & check packages](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml)
 
 i18n-Studio is a self-hosted solution for managing translation files. It helps with:
 
