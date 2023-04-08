@@ -9,9 +9,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "ESNext"
-//    "paths": {
-//      "@/*": ["./src/app/*"]
-//    }
   },
   "references": [
     {
