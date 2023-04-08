@@ -1,4 +1,6 @@
-# I18nStudio
+# i18n-studio
+
+![](./.github/assets/logo.gif)
 
 ## Development server
 

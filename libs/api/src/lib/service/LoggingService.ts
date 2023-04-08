@@ -5,14 +5,22 @@
  * @example
  * const loggingService = getLoggingService();
  */
-class LoggingService {
+export default class LoggingService {
   private readonly DEBUG_STATES = {
-    ALL: "ALL",
-    ERROR: "ERROR",
-    NONE: "NONE",
+    ALL: 'ALL',
+    ERROR: 'ERROR',
+    NONE: 'NONE',
   };
 
   private DEBUG_STATE = this.DEBUG_STATES.ALL;
+  private static instance: LoggingService | null = null;
+
+  public static getInstance() {
+    if (!this.instance) {
+      this.instance = new LoggingService();
+    }
+    return this.instance;
+  }
 
   /**
    * Log an error in the application.
@@ -44,16 +52,4 @@ class LoggingService {
   private checkDebugState(stateToCheck: string) {
     return this.DEBUG_STATE === stateToCheck;
   }
-}
-
-let instance: LoggingService | null = null;
-
-/**
- * Singleton
- */
-export function getLoggingService() {
-  if (!instance) {
-    instance = new LoggingService();
-  }
-  return instance;
 }

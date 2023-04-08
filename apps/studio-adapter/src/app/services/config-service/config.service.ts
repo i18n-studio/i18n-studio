@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { Config } from '../../models/Config';
+import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
 
 /**
  * Service which handles the usage of the i18n config file.
@@ -7,15 +8,23 @@ import { Config } from '../../models/Config';
 export class ConfigService {
   public static CONFIG_FILE = 'i18n.config.json';
 
+  logger = LoggingService.getInstance();
+
   /**
    * Get the path of the config file.
    */
   public getConfigFilePath(): string | null {
     try {
       const projectRoot = this.getProjectRoot();
-      return `${projectRoot}\\${ConfigService.CONFIG_FILE}`;
+      const file = `${projectRoot}\\${ConfigService.CONFIG_FILE}`;
+      this.logger.info(
+        'ConfigService',
+        'getConfigFilePath',
+        `Use config file ${file}.`
+      );
+      return file;
     } catch (e) {
-      console.error(e);
+      this.logger.info('ConfigService', 'getConfigFilePath', e);
       return null;
     }
   }

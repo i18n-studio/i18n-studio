@@ -6,7 +6,7 @@ import { useSocketOn } from '../hooks/useSocketOn';
 import { ISidebarItem } from '../components/Sidebar/SidebarItem.vue';
 import { ITreeView } from '../components/TreeView/TreeView.vue';
 import { ITreeViewItem } from '../components/TreeView/TreeViewItem.vue';
-import { getLoggingService } from '../service/LoggingService';
+import LoggingService from '../../../../../libs/api/src/lib/service/LoggingService';
 
 const socket = getSocketIOService();
 const selectedFile = ref<string>();
@@ -16,7 +16,7 @@ const localFiles = useSocketOn('GET_FILES', []);
 const sidebarItems = ref<ISidebarItem[]>([]);
 const treeViewItems = ref<ITreeView>();
 
-const loggingService = getLoggingService();
+const loggingService = LoggingService.getInstance();
 
 onMounted(() => {
   getTranslation('de.json');

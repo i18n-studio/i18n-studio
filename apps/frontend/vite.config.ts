@@ -19,7 +19,4 @@ export default defineConfig({
       dirs: ['src/app/components'],
     }),
   ],
-  test: {
-    environment: 'happy-dom',
-  },
 });
