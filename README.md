@@ -1,6 +1,38 @@
 # i18n-studio
 
-![](./.github/assets/logo.gif)
+i18n-Studio is a self-hosted solution for managing translation files. It helps with:
+
+* **file analyzing**: Analysis of the translation files for errors or different keys.
+* **adding translations**: Add translations across multiple files via a UI to prevent errors.
+* **provide translations**: Provide translations for your application via a modern REST API.
+
+<span style="color: #1586F7">This project is currently a work in progress. The above features 
+do not yet correspond to the project, and are only planned.</span>
+
+## Installation
+
+### Prerequisites
+
+To install the project, the following things are needed:
+
+* [**Node**](https://nodejs.org/en/download): 16.x
+
+### Checkout
+
+Clone this repository via:
+
+```bash
+$ git clone https://github.com/dominique-boerner/i18n-studio.git 
+```
+
+### Install
+
+Navigate into the repository and install the dependencies via:
+
+```bash
+$ cd i18n-studio
+$ npm install
+```
 
 ## Development server
 
