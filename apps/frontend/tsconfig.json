@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    // Enables stricter inference for data properties on `this`
+    "strict": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ESNext"
+//    "paths": {
+//      "@/*": ["./src/app/*"]
+//    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}
