@@ -5,7 +5,8 @@
   "scripts": {
     "nx": "nx",
     "serve:frontend": "nx serve frontend",
-    "serve:adapter": "nx serve studio-adapter"
+    "serve:adapter": "nx serve studio-adapter",
+    "check-packages": "check-packages --blacklist"
   },
   "private": true,
   "dependencies": {
@@ -61,6 +62,7 @@
     "@vue/eslint-config-typescript": "^11.0.2",
     "@vue/test-utils": "^2.3.2",
     "autoprefixer": "^10.4.14",
+    "check-packages": "^1.2.0",
     "class-transformer": "^0.5.1",
     "cypress": "^12.9.0",
     "eslint": "~8.15.0",
