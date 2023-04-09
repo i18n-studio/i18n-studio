@@ -1,14 +1,16 @@
 # i18n-studio 
 [![test & check packages](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml)
 
+![logo](./.github/assets/logo-with-slogan.png)
+
 i18n-Studio is a self-hosted solution for managing translation files. It helps with:
 
 * **file analyzing**: Analysis of the translation files for errors or different keys.
 * **adding translations**: Add translations across multiple files via a UI to prevent errors.
 * **provide translations**: Provide translations for your application via a modern REST API.
 
-<span style="color: #1586F7">This project is currently a work in progress. The above features 
-do not yet correspond to the project, and are only planned.</span>
+<i style="color: #1586F7">This project is currently a work in progress. The above features 
+do not yet correspond to the project, and are only planned.</i>
 
 ## Installation
 
