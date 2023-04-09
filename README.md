@@ -98,7 +98,8 @@ can be extended at any time.
 | Backend: get all files                       | ✔️         |
 | Backend: get file content                    | ✔️         |
 | Backend: configuration                       | ✔️         |
-| Backend: analyze files                       |            |
+| Backend: analyze files: soft                 | ✔️         |
+| Backend: analyze files: hard                 |            |
 | Backend: serve files via REST                |            |
 | Frontend: navigate between translation files | ✔️         |
 | Frontend: navigate between translations      |            |
