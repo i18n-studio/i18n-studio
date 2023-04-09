@@ -17,7 +17,7 @@ do not yet correspond to the project, and are only planned.</i>
 The workspace is a monorepo that uses [NX](https://nx.dev/). Run `nx graph` to see a diagram of the
 dependencies of the projects.
 
-## Installation
+## 🖥️ Installation
 
 ### Prerequisites
 
@@ -43,7 +43,7 @@ $ cd i18n-studio
 $ npm install
 ```
 
-## Development server
+## 🧑🏽‍💻 Development server
 
 The project is divided into two applications:
 
@@ -70,7 +70,7 @@ To serve the adapter, run this command:
 $ npm run serve:adapter
 ```
 
-## Dependency check
+## ✅ Dependency check
 
 The project uses a dependency checker [(Snyk)](https://snyk.io/advisor/npm-package/check-packages) to 
 monitor the health of NPM packages. Since i18n-studio connects directly to the file system via the adapter, 
@@ -85,7 +85,7 @@ The package health check can be launched via:
 $ check-packages --blacklist
 ```
 
-## Features
+## 📋 Features
 
 Below you will find a list of planned features. The list is not complete and 
 can be extended at any time.
