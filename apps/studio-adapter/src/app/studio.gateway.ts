@@ -7,29 +7,36 @@ import {
 import { FileService } from './services/file-service/file.service';
 import { ConfigService } from './services/config-service/config.service';
 import LoggingService from '../../../../libs/api/src/lib/service/LoggingService';
+import AnalyzerService from './services/analyzer-service/analyzer.service';
 
 @WebSocketGateway({ cors: true })
 export class StudioGateway {
   private static readonly NAME = 'StudioGateway';
 
-  private readonly fileService: FileService = new FileService();
-  private readonly configService: ConfigService = new ConfigService();
-  private readonly logger: LoggingService = new LoggingService();
+  private readonly logger: LoggingService = LoggingService.getInstance();
+
+  private filePath = this.configService.getConfig().dir;
 
   @WebSocketServer()
   server;
+
+  constructor(
+    private readonly fileService: FileService,
+    private readonly configService: ConfigService,
+    private readonly analyzerService: AnalyzerService
+  ) {}
 
   /**
    * Get every translation file, based on configuration and filter by pattern.
    */
   @SubscribeMessage('files')
-  handleFiles() {
+  public handleFiles() {
     this.logger.info(
       StudioGateway.NAME,
       'handleFiles',
       'Get every translation file.'
     );
-    const files = this.fileService.getFiles(this.getFilePathFromConfig());
+    const files = this.fileService.getFiles(this.filePath);
     const filteredFiles = this.fileService.filterFiles(files, '.json');
     this.server.emit('files', filteredFiles);
   }
@@ -39,21 +46,21 @@ export class StudioGateway {
    * @param filename {string} the name of the file without the path
    */
   @SubscribeMessage('fileContent')
-  handleFileContent(@MessageBody('filename') filename: string) {
+  public handleFileContent(@MessageBody('filename') filename: string) {
     this.logger.info(
       StudioGateway.NAME,
       'handleFileContent',
       `Get content of file ${filename}.`
     );
     const file = this.fileService.getFileContent(
-      `${this.getFilePathFromConfig()}/${filename}`
+      `${this.filePath}/${filename}`
     );
     this.server.emit('fileContent', file);
   }
 
-  private getFilePathFromConfig() {
-    const configFile = this.configService.getConfigFilePath();
-    const config = this.configService.readConfigFile(configFile);
-    return config.dir;
+  @SubscribeMessage('softAnalyze')
+  public handleSoftAnalyze() {
+    const result = this.analyzerService.softAnalyze();
+    this.server.emit('softAnalyze', result);
   }
 }

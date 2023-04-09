@@ -2,10 +2,12 @@ import * as fs from 'fs';
 import { Config } from '../../models/Config';
 import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
 import * as process from 'process';
+import { Injectable } from '@nestjs/common';
 
 /**
  * Service which handles the usage of the i18n config file.
  */
+@Injectable()
 export class ConfigService {
   public static CONFIG_FILE = 'i18n.config.json';
 
@@ -55,6 +57,11 @@ export class ConfigService {
       );
     }
     return config;
+  }
+
+  public getConfig(): Config {
+    const configFile = this.getConfigFilePath();
+    return this.readConfigFile(configFile);
   }
 
   private getDefaultConfig(): Config {

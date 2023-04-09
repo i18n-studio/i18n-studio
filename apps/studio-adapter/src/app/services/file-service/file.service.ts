@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 import { File } from '../../models/File';
 import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
+import { Injectable } from '@nestjs/common';
 
 /**
  * This service handles file I/O and streaming.
  */
+@Injectable()
 export class FileService {
   logger = LoggingService.getInstance();
 
