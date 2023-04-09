@@ -88,7 +88,9 @@ The project uses a dependency checker [(Snyk)](https://snyk.io/advisor/npm-packa
 monitor the health of NPM packages. Since i18n-studio connects directly to the file system via the adapter, 
 we want to offer users the highest possible security and prevent vulnerabilities.
 
-If NPM packages should be excluded from the analysis, they must be included in the 
+## Dependency Blacklisting
+
+If NPM packages should be forbidden from the project, they must be included in the 
 ```packages-blacklist.json```.
 
 The package health check can be launched via:
