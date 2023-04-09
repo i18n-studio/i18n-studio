@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
     AppLogo: typeof import('./src/app/components/widgets/AppLogo.vue')['default']
     Button: typeof import('./src/app/components/Button/Button.vue')['default']
     ButtonGroup: typeof import('./src/app/components/Button/ButtonGroup.vue')['default']
-    CookiesConsent: typeof import('./src/app/components/CookiesConsent.vue')['default']
     Input: typeof import('./src/app/components/Input.vue')['default']
     Notification: typeof import('./src/app/components/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

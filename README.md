@@ -70,6 +70,18 @@ To serve the adapter, run this command:
 $ npm run serve:adapter
 ```
 
+## 🐋 Run via Docker
+
+It is possible to start i18n-studio in a Docker environment. To start the application as Docker, 
+the following command must be executed:
+
+```bash
+$ npm run docker:compose
+```
+
+This command will run docker build and docker compose up on your machine. When the container has 
+been created, the front end is located at http://localhost:3000.
+
 ## ✅ Dependency check
 
 The project uses a dependency checker [(Snyk)](https://snyk.io/advisor/npm-package/check-packages) to 

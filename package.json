@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "build:frontend": "nx build frontend",
     "check-packages": "check-packages --blacklist",
+    "docker:compose": "docker compose build && docker compose up",
     "nx": "nx",
     "serve:frontend": "nx serve frontend",
     "serve:adapter": "nx serve studio-adapter",

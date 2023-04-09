@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: ./docker/frontend.dockerfile
+    ports:
+      - "3000:3000"
