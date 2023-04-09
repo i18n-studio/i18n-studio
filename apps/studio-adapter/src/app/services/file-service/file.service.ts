@@ -18,6 +18,23 @@ export class FileService {
   }
 
   /**
+   * Get the content of a specific file and parse it to JSON.
+   * @param filePath {string}.
+   */
+  public getFileContent(filePath: string): JSON {
+    if (!fs.existsSync(filePath)) {
+      this.logger.error(
+        'FileService',
+        'getFileContent',
+        `Can't find file ${filePath}.`
+      );
+      return JSON.parse('{}');
+    }
+
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  }
+
+  /**
    * Filter files by a specific filter.
    * @param files {File[]} the files to filter.
    * @param filter {string} regexp as a string.

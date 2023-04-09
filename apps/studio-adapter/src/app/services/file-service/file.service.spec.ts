@@ -11,6 +11,8 @@ describe('FileService', () => {
     new File('it.json'),
   ];
 
+  const filesDir = './../../example/i18n';
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [FileService],
@@ -36,6 +38,20 @@ describe('FileService', () => {
       const filter = 'fr.json';
 
       expect(fileService.filterFiles(filesMock, filter).length).toEqual(0);
+    });
+  });
+
+  describe('get file content', () => {
+    it('should get content of en.json', () => {
+      const content = fileService.getFileContent(`${filesDir}/en.json`);
+      expect(content).toEqual({
+        hello: 'Hello',
+      });
+    });
+
+    it('should not get content of fr.json', () => {
+      const content = fileService.getFileContent(`${filesDir}/fr.json`);
+      expect(content).toEqual({});
     });
   });
 });

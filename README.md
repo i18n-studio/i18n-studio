@@ -96,7 +96,7 @@ can be extended at any time.
 | Set up basic CI Pipeline                     | ✔️         |
 | serve via docker                             | ️          |
 | Backend: get all files                       | ✔️         |
-| Backend: get file content                    |            |
+| Backend: get file content                    | ✔️         |
 | Backend: configuration                       | ✔️         |
 | Backend: analyze files                       |            |
 | Backend: serve files via REST                |            |
