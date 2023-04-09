@@ -15,6 +15,7 @@ export default class AnalyzerService {
    * checks, if the amount of keys in the files are the same.
    *
    * If this is not the case, it writes the different into the AnalyzeResult.
+   * @see https://github.com/dominique-boerner/i18n-studio/wiki/Analyzer#soft-analysis
    */
   public softAnalyze(): AnalyzeResult[] {
     const path = this.configService.getConfig().dir;
