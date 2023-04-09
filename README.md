@@ -97,6 +97,12 @@ can be extended at any time.
 | serve via docker                             | ️          |
 | Backend: get all files                       | ✔️         |
 | Backend: get file content                    | ✔️         |
+| Backend: create new translation files        |            |
+| Backend: create new translations             |            |
+| Backend: update translation files            |            |
+| Backend: update translations                 |            |
+| Backend: remove translation files            |            |
+| Backend: remove translations                 |            |
 | Backend: configuration                       | ✔️         |
 | Backend: analyze files: soft                 | ✔️         |
 | Backend: analyze files: hard                 |            |
