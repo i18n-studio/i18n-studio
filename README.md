@@ -108,11 +108,11 @@ can be extended at any time.
 |----------------------------------------------|------------|
 | Set up repository                            | ✔️         |
 | Set up basic CI Pipeline                     | ✔️         |
-| serve via docker                             | ️          |
+| Serve via docker                             | ️          |
 | Backend: get all files                       | ✔️         |
 | Backend: get file content                    | ✔️         |
 | Backend: create new translation files        |            |
-| Backend: create new translations             |            |
+| Backend: create new translations             | ✔️         |
 | Backend: update translation files            |            |
 | Backend: update translations                 |            |
 | Backend: remove translation files            |            |

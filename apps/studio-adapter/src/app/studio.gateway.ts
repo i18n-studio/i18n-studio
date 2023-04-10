@@ -8,6 +8,7 @@ import { FileService } from './services/file-service/file.service';
 import { ConfigService } from './services/config-service/config.service';
 import LoggingService from '../../../../libs/api/src/lib/service/LoggingService';
 import AnalyzerService from './services/analyzer-service/analyzer.service';
+import TranslationService from './services/translation-service/translation.service';
 
 /**
  * Socket.io Gateway for the adapter.
@@ -27,7 +28,8 @@ export class StudioGateway {
   constructor(
     private readonly fileService: FileService,
     private readonly configService: ConfigService,
-    private readonly analyzerService: AnalyzerService
+    private readonly analyzerService: AnalyzerService,
+    private readonly translationService: TranslationService
   ) {}
 
   /**
@@ -76,6 +78,40 @@ export class StudioGateway {
       `${this.filePath}/${filename}`
     );
     this.server.emit('fileContent', file);
+  }
+
+  /**
+   * Add a translation to a file. If the given key already exists, it will be
+   * overwritten by the new value.
+   * It returns the new file content back to the client.
+   * @param filename {string} the file in which the translation should be added.
+   * @param key {string} the key, which should be added.
+   * @param value {string} the value, which should be added.
+   *
+   * @example
+   * // client - basic usage:
+   *
+   * // emit the operation to the studio-adapter
+   * this.socket.emit("addTranslation", "de.json", "hello", "Hallo");
+   */
+  @SubscribeMessage('addTranslation')
+  public handleAddTranslation(
+    @MessageBody('filename') filename: string,
+    @MessageBody('key') key: string,
+    @MessageBody('value') value: string
+  ) {
+    this.logger.info(
+      StudioGateway.NAME,
+      'handleAddTranslation',
+      `Add translation ${key}:${value} to ${filename}.`
+    );
+
+    const file = `${this.filePath}/${filename}`;
+    this.translationService.addTranslation(file, key, value);
+    const fileContent = this.fileService.getFileContent(
+      `${this.filePath}/${filename}`
+    );
+    this.server.emit('addTranslation', fileContent);
   }
 
   /**

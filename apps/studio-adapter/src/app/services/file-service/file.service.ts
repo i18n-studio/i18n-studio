@@ -23,7 +23,7 @@ export class FileService {
    * Get the content of a specific file and parse it to JSON.
    * @param filePath {string}.
    */
-  public getFileContent(filePath: string): JSON {
+  public getFileContent(filePath: string): any {
     if (!fs.existsSync(filePath)) {
       this.logger.error(
         'FileService',
@@ -43,5 +43,9 @@ export class FileService {
    */
   public filterFiles(files: File[], filter: string): File[] {
     return files.filter((File) => File.filenameMatching(filter));
+  }
+
+  updateFile(filePath: string, content: string) {
+    fs.writeFileSync(filePath, JSON.stringify(content));
   }
 }
