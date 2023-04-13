@@ -7,6 +7,7 @@ import { ISidebarItem } from '../components/Sidebar/SidebarItem.vue';
 import { ITreeView } from '../components/TreeView/TreeView.vue';
 import { ITreeViewItem } from '../components/TreeView/TreeViewItem.vue';
 import LoggingService from '../../../../../libs/api/src/lib/service/LoggingService';
+import { INotification } from '../components/NotificationItem.vue';
 
 const socket = getSocketIOService();
 const selectedFile = ref<string>();
@@ -17,6 +18,15 @@ const sidebarItems = ref<ISidebarItem[]>([]);
 const treeViewItems = ref<ITreeView>();
 
 const loggingService = LoggingService.getInstance();
+
+// This is only for testing purposes
+const mockNotifications: INotification[] = [
+  {
+    title: 'Missing translation in it.json',
+    text: 'Translation for »colors.blue« is not defined.',
+    severity: 'error',
+  },
+];
 
 onMounted(() => {
   getTranslation('de.json');
@@ -81,7 +91,7 @@ function onSidebarItemClick(itemId: string) {
 </script>
 
 <template>
-  <Toolbar />
+  <Toolbar :notifications="mockNotifications" />
   <section class="flex flex-row h-screen">
     <Sidebar
       class="w-auto"

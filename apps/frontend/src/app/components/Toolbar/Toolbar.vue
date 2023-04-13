@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import NotificationItem from '../NotificationItem.vue';
+import NotificationItem, { INotification } from '../NotificationItem.vue';
 import { ref } from 'vue';
+
+interface IToolbar {
+  notifications: INotification[];
+}
+
+defineProps<IToolbar>();
 
 const isNotificationVisible = ref(false);
 </script>
@@ -22,7 +28,12 @@ const isNotificationVisible = ref(false);
         class="border-l-2"
         @click="isNotificationVisible = !isNotificationVisible"
       >
-        <Button icon="fa-bell" title="analyzer" />
+        <Button
+          icon="fa-bell"
+          title="analyzer"
+          :bageVisible="notifications.length > 0"
+          :badgeText="notifications.length"
+        />
       </ButtonGroup>
     </section>
     <section
@@ -40,19 +51,12 @@ const isNotificationVisible = ref(false);
       </header>
       <main class="p-2 my-2">
         <NotificationItem
+          v-for="notification in notifications"
+          :key="notification.title"
           class="mb-1"
-          title="Missing translation in it.json"
-          text="Translation for »colors.blue« is not defined."
-        />
-        <NotificationItem
-          class="mb-1"
-          title="Missing translation in it.json"
-          text="Translation for »colors.blue« is not defined."
-        />
-        <NotificationItem
-          class="mb-1"
-          title="Missing translation in it.json"
-          text="Translation for »colors.blue« is not defined."
+          :title="notification.title"
+          :text="notification.text"
+          :severity="notification.severity"
         />
       </main>
     </section>
