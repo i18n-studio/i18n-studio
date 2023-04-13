@@ -5,11 +5,13 @@ interface IButton {
   label?: string;
   icon?: string;
   title?: string;
+  isDisabled?: boolean;
   badgeVisible?: boolean;
   badgeText?: number;
 }
 
 const props = defineProps<IButton>();
+defineEmits(['onClick']);
 
 const iconClass = computed(() => {
   return props.label ? 'pl-2' : '';
@@ -17,13 +19,17 @@ const iconClass = computed(() => {
 </script>
 
 <template>
-  <button class="flex items-center px-4 hover:bg-gray-100" :title="title">
+  <button
+    class="flex items-center px-4 disabled:text-gray-400 enabled:hover:bg-gray-100 disabled:cursor-default"
+    :title="title"
+    :disabled="isDisabled"
+    @click="$emit('onClick')"
+  >
     <span v-if="label">{{ label }}</span>
 
     <div class="relative">
       <font-awesome-icon
         v-if="icon"
-        class="cursor-pointer"
         :class="iconClass"
         :icon="`fa-solid ${icon}`"
       />

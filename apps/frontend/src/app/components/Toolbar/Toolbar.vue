@@ -3,7 +3,8 @@ import NotificationItem, { INotification } from '../NotificationItem.vue';
 import { ref } from 'vue';
 
 interface IToolbar {
-  notifications: INotification[];
+  notifications?: INotification[];
+  isDisabled?: boolean;
 }
 
 defineProps<IToolbar>();
@@ -15,24 +16,39 @@ const isNotificationVisible = ref(false);
   <div class="relative">
     <section class="flex items-center justify-between border-b-2">
       <ButtonGroup>
-        <Button class="border-r-2" icon="fa-add" title="add translation" />
+        <Button
+          class="border-r-2"
+          icon="fa-add"
+          title="add translation"
+          :isDisabled="isDisabled"
+        />
         <Button
           class="border-r-2"
           icon="fa-file-circle-check"
           title="analyze files"
+          :isDisabled="isDisabled"
         />
-        <Button class="border-r-2" icon="fa-undo" title="undo" />
-        <Button class="border-r-2" icon="fa-redo" title="redo" />
+        <Button
+          class="border-r-2"
+          icon="fa-undo"
+          title="undo"
+          :isDisabled="isDisabled"
+        />
+        <Button
+          class="border-r-2"
+          icon="fa-redo"
+          title="redo"
+          :isDisabled="isDisabled"
+        />
       </ButtonGroup>
-      <ButtonGroup
-        class="border-l-2"
-        @click="isNotificationVisible = !isNotificationVisible"
-      >
+      <ButtonGroup class="border-l-2">
         <Button
           icon="fa-bell"
           title="analyzer"
           :bageVisible="notifications.length > 0"
           :badgeText="notifications.length"
+          :isDisabled="isDisabled"
+          @on-click="isNotificationVisible = !isNotificationVisible"
         />
       </ButtonGroup>
     </section>

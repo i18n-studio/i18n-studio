@@ -24,7 +24,7 @@ const mockNotifications: INotification[] = [
   {
     title: 'Missing translation in it.json',
     text: 'Translation for »colors.blue« is not defined.',
-    severity: 'error',
+    severity: 'default',
   },
 ];
 
@@ -91,7 +91,7 @@ function onSidebarItemClick(itemId: string) {
 </script>
 
 <template>
-  <Toolbar :notifications="mockNotifications" />
+  <Toolbar :isDisabled="!isConnected" :notifications="mockNotifications" />
   <section class="flex flex-row h-screen">
     <Sidebar
       class="w-auto"
