@@ -17,7 +17,7 @@ import {
   faUndo,
   faRedo,
   faBell,
-  faSliders,
+  faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
@@ -29,7 +29,7 @@ library.add(faFileCircleCheck);
 library.add(faUndo);
 library.add(faRedo);
 library.add(faBell);
-library.add(faSliders);
+library.add(faRefresh);
 
 import App from './App.vue';
 

@@ -62,7 +62,7 @@ const isNotificationVisible = ref(false);
         <span class="font-bold">Notifications</span>
 
         <ButtonGroup>
-          <Button icon="fa-sliders" />
+          <Button icon="fa-refresh" title="Refresh" />
         </ButtonGroup>
       </header>
       <main class="p-2 my-2">
