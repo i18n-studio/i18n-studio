@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ISidebarItem } from "./SidebarItem.vue";
+import { ISidebarItem } from './SidebarItem.vue';
 
 interface ISidebar {
   model?: ISidebarItem[];
   selected?: string;
 }
 defineProps<ISidebar>();
-defineEmits(["onItemClick"]);
+defineEmits(['onItemClick']);
 </script>
 
 <template>

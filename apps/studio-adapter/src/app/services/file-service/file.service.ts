@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { File } from '../../models/File';
+import { File } from '../../../../../../libs/api/src/lib/models/File';
 import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
 import { Injectable } from '@nestjs/common';
 

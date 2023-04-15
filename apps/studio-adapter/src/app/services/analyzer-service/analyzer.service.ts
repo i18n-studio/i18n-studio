@@ -2,9 +2,18 @@ import { AnalyzeResult } from '../../../../../../libs/api/src/lib/models/Analyze
 import { FileService } from '../file-service/file.service';
 import { ConfigService } from '../config-service/config.service';
 import { Injectable } from '@nestjs/common';
+import { File } from '../../../../../../libs/api/src/lib/models/File';
+import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
 
+/**
+ * This service handles the analyzing of the different translation file. It
+ * compares the translation file with the default translation file, given in
+ * the _defaultLanguage_ key of the configuration.
+ */
 @Injectable()
 export default class AnalyzerService {
+  private readonly logger: LoggingService = LoggingService.getInstance();
+
   constructor(
     private readonly configService: ConfigService,
     private readonly fileService: FileService
@@ -15,45 +24,58 @@ export default class AnalyzerService {
    * checks, if the amount of keys in the files are the same.
    *
    * If this is not the case, it writes the different into the AnalyzeResult.
-   * @see https://github.com/dominique-boerner/i18n-studio/wiki/Analyzer#soft-analysis
    */
   public softAnalyze(): AnalyzeResult[] {
     const path = this.configService.getConfig().dir;
-    const files = this.fileService.getFiles(path);
+    const defaultLanguage = this.configService.getConfig().defaultLanguage;
+
+    const defaultLanguageContent = this.fileService.getFileContent(
+      `${path}/${defaultLanguage}.json`
+    );
+    const defaultLanguageTranslationAmount = this.getTranslationAmount(
+      defaultLanguageContent
+    );
+
+    const languageFiles: File[] = this.fileService
+      .getFiles(path)
+      .filter((file) => !file.filenameMatching(`${defaultLanguage}.json`));
+
     const analyzeResults: AnalyzeResult[] = [];
 
-    const keys = files.map((file) => {
+    languageFiles.forEach((file) => {
       const content = this.fileService.getFileContent(
         `${path}/${file.filename}`
       );
-      return this.flattenObject(content);
-    });
+      const translationAmount = this.getTranslationAmount(content);
 
-    files.forEach((file, index) => {
-      const currentFileContent = keys[index];
-      const nextFileContent = keys[index + 1];
-
-      if (!nextFileContent) {
-        return;
-      }
-
-      const currentFileKeyCount = Object.keys(currentFileContent).length;
-      const nextFileKeyCount = Object.keys(nextFileContent).length;
-
-      const hasDifference =
-        nextFileContent && currentFileKeyCount !== nextFileKeyCount;
-
-      if (hasDifference) {
+      if (translationAmount !== defaultLanguageTranslationAmount) {
         const result: AnalyzeResult = {
           src: file.filename,
-          target: files[index + 1].filename,
-          differentKeysCount: currentFileKeyCount - nextFileKeyCount,
+          target: `${defaultLanguage}.json`,
+          differentKeysCount:
+            translationAmount - defaultLanguageTranslationAmount,
         };
         analyzeResults.push(result);
       }
     });
 
+    this.logger.info(
+      'AnalyzerService',
+      'softAnalyze',
+      `${analyzeResults.length} differences found while soft analyzing.`
+    );
+
     return analyzeResults;
+  }
+
+  /**
+   * Get the amount of translations from the translation file content.
+   * @param content
+   * @private
+   */
+  private getTranslationAmount(content): number {
+    const flatObject = this.flattenObject(content);
+    return Object.keys(flatObject).length;
   }
 
   /**

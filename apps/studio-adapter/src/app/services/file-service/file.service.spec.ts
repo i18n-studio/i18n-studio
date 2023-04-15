@@ -1,5 +1,5 @@
 import { FileService } from './file.service';
-import { File } from '../../models/File';
+import { File } from '../../../../../../libs/api/src/lib/models/File';
 import { Test } from '@nestjs/testing';
 
 describe('FileService', () => {
