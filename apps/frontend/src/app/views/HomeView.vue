@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import { isObject } from 'vue-composable';
-import { getSocketIOService } from '../service/SocketIOService';
+import {
+  getSocketIOService,
+  SocketIOService,
+} from '../service/SocketIOService';
 import { useSocketOn } from '../hooks/useSocketOn';
 import { ISidebarItem } from '../components/Sidebar/SidebarItem.vue';
 import { ITreeView } from '../components/TreeView/TreeView.vue';
 import { ITreeViewItem } from '../components/TreeView/TreeViewItem.vue';
 import LoggingService from '../../../../../libs/api/src/lib/service/LoggingService';
+import { File } from '../../../../../libs/api/src/lib/models/File';
 
 const socket = getSocketIOService();
-const selectedFile = ref<string>();
+const selectedFile = ref<File>();
 const isConnected = useSocketOn('CONNECT', false, true);
 const fileContent = useSocketOn('GET_FILE_CONTENT', {});
 const localFiles = useSocketOn('GET_FILES', []);
@@ -17,10 +21,10 @@ const sidebarItems = ref<ISidebarItem[]>([]);
 const treeViewItems = ref<ITreeView>();
 
 const loggingService = LoggingService.getInstance();
+const socketService = SocketIOService.getInstance();
 
 onMounted(() => {
-  getTranslation('de.json');
-  socket.emit('files');
+  socketService.emitEvent('GET_FILES');
 });
 
 watch(isConnected, () => {
@@ -31,8 +35,17 @@ watch(isConnected, () => {
   );
 });
 
-watch(localFiles, mapStringToSidebarItemList);
+watch(localFiles, (value: File[]) => {
+  mapStringToSidebarItemList(value);
+});
+
 watch(fileContent, mapFileContentToTreeView);
+
+watch(selectedFile, () => {
+  socketService.emitEvent('GET_FILE_CONTENT', {
+    filename: localFiles.value[0].filename,
+  });
+});
 
 function mapFileContentToTreeView(content: any) {
   const items: ITreeViewItem = {
@@ -56,8 +69,8 @@ function generateTreeViewItemList(content: any): ITreeViewItem {
   return items;
 }
 
-function mapStringToSidebarItemList(files: any[]) {
-  sidebarItems.value = files.map((file: any) => {
+function mapStringToSidebarItemList(files: File[]) {
+  sidebarItems.value = files.map((file) => {
     return {
       label: file.filename.split('.')[0],
       id: file,
@@ -65,16 +78,15 @@ function mapStringToSidebarItemList(files: any[]) {
   });
 }
 
-function getTranslation(file: string) {
+function getTranslation(file: File) {
   loggingService.info(
     'HomeView',
     'getTranslation',
     `Get translation for ${file}.`
   );
-  socket.emit('getFileContent', { file });
 }
 
-function onSidebarItemClick(itemId: string) {
+function onSidebarItemClick(itemId: File) {
   selectedFile.value = itemId;
   getTranslation(itemId);
 }
@@ -86,7 +98,7 @@ function onSidebarItemClick(itemId: string) {
     <Sidebar
       class="w-auto"
       :model="sidebarItems"
-      :selected="selectedFile"
+      :selected="selectedFile?.filename"
       @on-item-click="onSidebarItemClick"
     />
     <div class="flex flex-col p-2 w-80 bg-white border-r-2">

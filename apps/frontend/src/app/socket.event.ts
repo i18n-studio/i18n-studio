@@ -10,7 +10,6 @@ export type SocketEventType =
 export const SocketEvent = new Map<SocketEventType, string>([
   ['CONNECT', 'connect'],
   ['DISCONNECT', 'disconnect'],
-  ['CONNECT', 'connect'],
-  ['GET_FILE_CONTENT', 'sendFileContent'],
+  ['GET_FILE_CONTENT', 'fileContent'],
   ['GET_FILES', 'files'],
 ]);

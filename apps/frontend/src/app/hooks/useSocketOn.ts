@@ -1,6 +1,9 @@
 import { ref } from 'vue';
 import { SocketEvent, SocketEventType } from '../socket.event';
-import { getSocketIOService } from '../service/SocketIOService';
+import {
+  getSocketIOService,
+  SocketIOService,
+} from '../service/SocketIOService';
 import LoggingService from '../../../../../libs/api/src/lib/service/LoggingService';
 
 /**
@@ -16,7 +19,7 @@ export const useSocketOn = (
   defaultValue?: any,
   successCallback?: boolean
 ): any => {
-  const socket = getSocketIOService();
+  const socketIOService = SocketIOService.getInstance();
   const loggingService = LoggingService.getInstance();
 
   const event = SocketEvent.get(socketEvent);
@@ -28,7 +31,7 @@ export const useSocketOn = (
     return;
   }
 
-  socket.on(event, (res: any) => {
+  socketIOService.socket.on(event, (res: any) => {
     loggingService.info('useSocketOn', event, 'Event captured.');
 
     if (successCallback) {

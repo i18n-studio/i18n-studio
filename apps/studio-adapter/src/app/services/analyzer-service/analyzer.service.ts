@@ -2,7 +2,7 @@ import { AnalyzeResult } from '../../../../../../libs/api/src/lib/models/Analyze
 import { FileService } from '../file-service/file.service';
 import { ConfigService } from '../config-service/config.service';
 import { Injectable } from '@nestjs/common';
-import { File } from '../../models/File';
+import { File } from '../../../../../../libs/api/src/lib/models/File';
 import LoggingService from '../../../../../../libs/api/src/lib/service/LoggingService';
 
 /**
