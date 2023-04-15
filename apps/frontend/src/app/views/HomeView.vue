@@ -10,15 +10,17 @@ import { File } from '../../../../../libs/api/src/lib/models/File';
 
 const socketService = SocketIOService.getInstance();
 
-const selectedFile = ref<File>();
-const fileContent = useSocketOn('GET_FILE_CONTENT', {});
+const selectedFile = ref<string>();
+const fileContent = useSocketOn('GET_FILE_CONTENT', null);
 const localFiles = useSocketOn('GET_FILES', []);
 
 const treeViewItems = computed<ITreeView>(() => {
   const content = fileContent.value;
-  return {
-    children: generateTreeViewItemList(content),
-  };
+  if (content) {
+    return {
+      children: generateTreeViewItemList(content),
+    };
+  }
 });
 
 const sidebarItems = computed<ISidebarItem[]>(() => {
@@ -27,7 +29,7 @@ const sidebarItems = computed<ISidebarItem[]>(() => {
     return files.map((file) => {
       return {
         label: file.filename.split('.')[0],
-        id: file,
+        id: file.filename,
       };
     });
   }
@@ -52,10 +54,10 @@ function generateTreeViewItemList(content: any): ITreeViewItem {
   });
 }
 
-function onSidebarItemClick(file: File) {
+function onSidebarItemClick(file: string) {
   selectedFile.value = file;
   socketService.emitEvent('GET_FILE_CONTENT', {
-    filename: file.filename,
+    filename: file,
   });
 }
 </script>
@@ -66,7 +68,7 @@ function onSidebarItemClick(file: File) {
     <Sidebar
       class="w-auto"
       :model="sidebarItems"
-      :selected="selectedFile?.filename"
+      :selected="selectedFile"
       @on-item-click="onSidebarItemClick"
     />
     <div class="flex flex-col p-2 w-80 bg-white border-r-2">
@@ -77,7 +79,7 @@ function onSidebarItemClick(file: File) {
       <TreeView v-if="treeViewItems" :model="treeViewItems" />
     </div>
     <div class="bg-gray-100 w-screen p-4 py-5">
-      <pre>{{ fileContent }}</pre>
+      <pre v-if="fileContent">{{ fileContent }}</pre>
     </div>
   </section>
 </template>

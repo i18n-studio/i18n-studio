@@ -6,7 +6,7 @@ export interface ISidebarItem {
 }
 
 defineProps<ISidebarItem>();
-defineEmits(["onItemClick"]);
+defineEmits(['onItemClick']);
 </script>
 
 <template>
