@@ -1,4 +1,5 @@
-# i18n-studio 
+# i18n-studio
+
 [![test & check packages](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml)
 
 ![logo](./.github/assets/logo-with-slogan.png)
@@ -9,8 +10,8 @@ i18n-Studio is a self-hosted solution for managing translation files. It helps w
 * **adding translations**: Add translations across multiple files via a UI to prevent errors.
 * **provide translations**: Provide translations for your application via a modern REST API.
 
-<i style="color: #1586F7">This project is currently a work in progress. The above features 
-do not yet correspond to the project, and are only planned.</i>
+> This project is currently a work in progress. The above features
+do not yet correspond to the project, and are only planned.
 
 ## Understand this workspace
 
@@ -49,7 +50,7 @@ The project is divided into two applications:
 
 ### frontend
 
-The front-end is a VueJS application using TailwindCSS. It connects to the studio-adapter 
+The front-end is a VueJS application using TailwindCSS. It connects to the studio-adapter
 via [Socket.io](https://socket.io/) and provide a UI to perform various CRUD actions.
 
 To serve the frontend run this command:
@@ -72,25 +73,25 @@ $ npm run serve:adapter
 
 ## 🐋 Run via Docker
 
-It is possible to start i18n-studio in a Docker environment. To start the application as Docker, 
+It is possible to start i18n-studio in a Docker environment. To start the application as Docker,
 the following command must be executed:
 
 ```bash
 $ npm run docker:compose
 ```
 
-This command will run docker build and docker compose up on your machine. When the container has 
+This command will run docker build and docker compose up on your machine. When the container has
 been created, the front end is located at http://localhost:3000.
 
 ## ✅ Dependency check
 
-The project uses a dependency checker [(Snyk)](https://snyk.io/advisor/npm-package/check-packages) to 
-monitor the health of NPM packages. Since i18n-studio connects directly to the file system via the adapter, 
+The project uses a dependency checker [(Snyk)](https://snyk.io/advisor/npm-package/check-packages) to
+monitor the health of NPM packages. Since i18n-studio connects directly to the file system via the adapter,
 we want to offer users the highest possible security and prevent vulnerabilities.
 
 ## Dependency Blacklisting
 
-If NPM packages should be forbidden from the project, they must be included in the 
+If NPM packages should be forbidden from the project, they must be included in the
 ```packages-blacklist.json```.
 
 The package health check can be launched via:
@@ -101,41 +102,43 @@ $ check-packages --blacklist
 
 ## 📋 Features
 
-Below you will find a list of planned features. The list is not complete and 
+Below you will find a list of planned features. The list is not complete and
 can be extended at any time.
 
-| Feature                                      | Completion |
-|----------------------------------------------|------------|
-| Set up repository                            | ✔️         |
-| Set up basic CI Pipeline                     | ✔️         |
-| Serve via docker                             | ️          |
-| Backend: get all files                       | ✔️         |
-| Backend: get file content                    | ✔️         |
-| Backend: create new translation files        |            |
-| Backend: create new translations             | ✔️         |
-| Backend: update translation files            |            |
-| Backend: update translations                 |            |
-| Backend: remove translation files            |            |
-| Backend: remove translations                 |            |
-| Backend: configuration                       | ✔️         |
-| Backend: analyze files: soft                 | ✔️         |
-| Backend: analyze files: hard                 |            |
-| Backend: serve files via REST                |            |
-| Frontend: navigate between translation files | ✔️         |
-| Frontend: navigate between translations      |            |
-| Frontend: create new translation files       |            |
-| Frontend: create new translations            |            |
-| Frontend: update translation files           |            |
-| Frontend: update translations                |            |
-| Frontend: remove translation files           |            |
-| Frontend: remove translations                |            |
-| Idea: Create a configuration wizard          |            |
-| Idea: create translation suggestions (deepL) |            |
+> The corresponding issue tickets were added later. Therefore, it is possible that not every feature contains an issue.
+
+| Feature                                      | Completion | Ref                                                                    |
+|----------------------------------------------|------------|------------------------------------------------------------------------|
+| Set up repository                            | ✔️         |                                                                        |
+| Set up basic CI Pipeline                     | ✔️         |                                                                        |
+| Serve via docker                             | ️          | [Issue #1](https://github.com/dominique-boerner/i18n-studio/issues/1]) |
+| Backend: get all files                       | ✔️         |                                                                        |
+| Backend: get file content                    | ✔️         |                                                                        |
+| Backend: create new translation files        |            | [Issue #2](https://github.com/dominique-boerner/i18n-studio/issues/2]) |
+| Backend: create new translations             | ✔️         |                                                                        |
+| Backend: update translation files            |            | [Issue #3](https://github.com/dominique-boerner/i18n-studio/issues/3]) |
+| Backend: update translations                 |            | [Issue #4](https://github.com/dominique-boerner/i18n-studio/issues/4]) |
+| Backend: remove translation files            |            | TDB                                                                    |
+| Backend: remove translations                 |            | TDB                                                                    |
+| Backend: configuration                       | ✔️         |                                                                        |
+| Backend: analyze files: soft                 | ✔️         |                                                                        |
+| Backend: analyze files: hard                 |            | TDB                                                                    |
+| Backend: serve files via REST                |            | TDB                                                                    |
+| Frontend: navigate between translation files | ✔️         |                                                                        |
+| Frontend: navigate between translations      |            | TDB                                                                    |
+| Frontend: create new translation files       |            | TDB                                                                    |
+| Frontend: create new translations            |            | TDB                                                                    |
+| Frontend: update translation files           |            | TDB                                                                    |
+| Frontend: update translations                |            | TDB                                                                    |
+| Frontend: remove translation files           |            | TDB                                                                    |
+| Frontend: remove translations                |            | TDB                                                                    |
+| Idea: Create a configuration wizard          |            | TDB                                                                    |
+| Idea: create translation suggestions (deepL) |            | TDB                                                                    |
 
 ## Conventional Commits
 
-To standardise commit messages, we use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). 
-These commit messages are currently not supported by any kind of semantic release. Corresponding plugins are 
+To standardise commit messages, we use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+These commit messages are currently not supported by any kind of semantic release. Corresponding plugins are
 available for the IDEs:
 
 * **IntelliJ:** https://plugins.jetbrains.com/plugin/13389-conventional-commit
