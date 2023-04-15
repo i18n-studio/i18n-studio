@@ -6,13 +6,30 @@ import { useSocketOn } from '../hooks/useSocketOn';
 import { ISidebarItem } from '../components/Sidebar/SidebarItem.vue';
 import { ITreeView } from '../components/TreeView/TreeView.vue';
 import { ITreeViewItem } from '../components/TreeView/TreeViewItem.vue';
+import { INotification } from '../components/NotificationItem.vue';
 import { File } from '../../../../../libs/api/src/lib/models/File';
+import { AnalyzeResult } from '../../../../../libs/api/src/lib/models/AnalyzeResult';
 
 const socketService = SocketIOService.getInstance();
 
 const selectedFile = ref<string>();
+const isConnected = useSocketOn('CONNECT', false, true);
 const fileContent = useSocketOn('GET_FILE_CONTENT', null);
 const localFiles = useSocketOn('GET_FILES', []);
+const softAnalyzeResults = useSocketOn('SOFT_ANALYZE', []);
+
+const notifications = computed<INotification[]>(() => {
+  const analyzeResults: AnalyzeResult[] = softAnalyzeResults.value;
+
+  return analyzeResults.map((result) => {
+    return {
+      title: `Difference found`,
+      text: `"${result.src}" contains ${result.differentKeysCount} more lines
+            than your default language "${result.target}".`,
+      severity: 'error',
+    };
+  });
+});
 
 const treeViewItems = computed<ITreeView>(() => {
   const content = fileContent.value;
@@ -60,10 +77,18 @@ function onSidebarItemClick(file: string) {
     filename: file,
   });
 }
+
+function softAnalyze() {
+  socketService.emitEvent('SOFT_ANALYZE');
+}
 </script>
 
 <template>
-  <Toolbar />
+  <Toolbar
+    :isDisabled="!isConnected"
+    :notifications="notifications"
+    @on-notification-refresh-click="softAnalyze"
+  />
   <section class="flex flex-row h-screen">
     <Sidebar
       class="w-auto"

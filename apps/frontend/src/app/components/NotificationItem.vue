@@ -2,7 +2,7 @@
 import { Severity } from '../models/types';
 import { computed } from 'vue';
 
-interface INotification {
+export interface INotification {
   title?: string;
   text?: string;
   severity?: Severity;

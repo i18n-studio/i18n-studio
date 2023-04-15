@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { useSocketOn } from './hooks/useSocketOn';
-import Notification from './components/Notification.vue';
+import NotificationItem from './components/NotificationItem.vue';
 import { watch } from 'vue';
 
 const isOnline = useSocketOn('CONNECT', false, true);
@@ -12,7 +12,7 @@ watch(useSocketOn('DISCONNECT'), () => {
 </script>
 
 <template>
-  <Notification
+  <NotificationItem
     v-if="!isOnline"
     title="Online status"
     text="No connection to adapter established."
