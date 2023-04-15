@@ -129,6 +129,7 @@ can be extended at any time.
 | Frontend: update translations                |            |
 | Frontend: remove translation files           |            |
 | Frontend: remove translations                |            |
+| Idea: Create a configuration wizard          |            |
 | Idea: create translation suggestions (deepL) |            |
 
 ## Conventional Commits
