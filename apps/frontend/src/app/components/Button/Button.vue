@@ -8,6 +8,7 @@ interface IButton {
   isDisabled?: boolean;
   badgeVisible?: boolean;
   badgeText?: number;
+  underline?: boolean;
 }
 
 const props = defineProps<IButton>();
@@ -15,6 +16,12 @@ defineEmits(['onClick']);
 
 const iconClass = computed(() => {
   return props.label ? 'pl-2' : '';
+});
+
+const buttonLabelClass = computed(() => {
+  return {
+    underline: props.underline,
+  };
 });
 </script>
 
@@ -25,10 +32,10 @@ const iconClass = computed(() => {
     :disabled="isDisabled"
     @click="$emit('onClick')"
   >
-    <span v-if="label">{{ label }}</span>
+    <span v-if="label" :class="buttonLabelClass">{{ label }}</span>
 
     <div class="relative">
-      <font-awesome-icon
+      <FontAwesomeIcon
         v-if="icon"
         :class="iconClass"
         :icon="`fa-solid ${icon}`"
