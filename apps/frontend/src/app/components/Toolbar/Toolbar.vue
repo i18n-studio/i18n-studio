@@ -8,6 +8,7 @@ interface IToolbar {
 }
 
 defineProps<IToolbar>();
+defineEmits(['on-notification-refresh-click']);
 
 const isNotificationVisible = ref(false);
 </script>
@@ -62,7 +63,11 @@ const isNotificationVisible = ref(false);
         <span class="font-bold">Notifications</span>
 
         <ButtonGroup>
-          <Button icon="fa-refresh" title="Refresh" />
+          <Button
+            icon="fa-refresh"
+            title="Refresh"
+            @click="$emit('on-notification-refresh-click')"
+          />
         </ButtonGroup>
       </header>
       <main class="p-2 my-2">
