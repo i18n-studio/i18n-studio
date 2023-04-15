@@ -69,7 +69,7 @@ export class ConfigService {
     return {
       dir: './i18n',
       pattern: '.json',
-      defaultLanguage: 'de',
+      defaultLanguage: 'en',
     };
   }
 

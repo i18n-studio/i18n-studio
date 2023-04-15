@@ -1,5 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { ConfigService } from './config.service';
+import { Config } from '../../models/Config';
 
 describe('ConfigService', () => {
   let configService: ConfigService;
@@ -23,19 +24,25 @@ describe('ConfigService', () => {
       const config = configService.getConfigFilePath();
       const configFileContent = configService.readConfigFile(config);
 
-      expect(configFileContent).toEqual({
+      const expected: Config = {
         dir: './example/i18n',
+        defaultLanguage: 'en',
         pattern: '.json',
-      });
+      };
+
+      expect(configFileContent).toEqual(expected);
     });
 
     it('should use default config', () => {
       const configFileContent = configService.readConfigFile('');
 
-      expect(configFileContent).toEqual({
+      const expected: Config = {
         dir: './i18n',
+        defaultLanguage: 'en',
         pattern: '.json',
-      });
+      };
+
+      expect(configFileContent).toEqual(expected);
     });
   });
 });
