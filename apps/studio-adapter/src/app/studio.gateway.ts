@@ -33,6 +33,28 @@ export class StudioGateway {
   ) {}
 
   /**
+   * Get the current i18n-studio configuration.
+   * @example
+   * // client - basic usage:
+   *
+   * // emit the operation to the studio-adapter
+   * this.socket.emit("config");
+   *
+   * // retrieve the configuration file
+   * const config = this.socket.on("config");
+   */
+  @SubscribeMessage('config')
+  public handleConfig() {
+    const config = this.configService.getConfig();
+    this.logger.info(
+      StudioGateway.NAME,
+      'handleConfig',
+      `Get configuration: ${JSON.stringify(config)}`
+    );
+    this.server.emit('config', config);
+  }
+
+  /**
    * Get every translation file, based on configuration and filter by pattern.
    * @example
    * // client - basic usage:

@@ -47,6 +47,7 @@ export class ConfigService {
     if (fs.existsSync(filepath)) {
       const fileContent = JSON.parse(fs.readFileSync(filepath, 'utf8'));
       config = {
+        ...config,
         ...fileContent,
       };
     } else {
@@ -68,6 +69,7 @@ export class ConfigService {
     return {
       dir: './i18n',
       pattern: '.json',
+      defaultLanguage: 'de',
     };
   }
 

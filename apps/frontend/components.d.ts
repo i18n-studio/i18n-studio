@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     ButtonGroup: typeof import('./src/app/components/Button/ButtonGroup.vue')['default']
     Input: typeof import('./src/app/components/Input.vue')['default']
     Notification: typeof import('./src/app/components/Notification.vue')['default']
+    NotificationItem: typeof import('./src/app/components/NotificationItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/app/components/Sidebar/Sidebar.vue')['default']
