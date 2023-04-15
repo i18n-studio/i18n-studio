@@ -1,62 +1,46 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { isObject } from 'vue-composable';
-import {
-  getSocketIOService,
-  SocketIOService,
-} from '../service/SocketIOService';
+import { SocketIOService } from '../service/SocketIOService';
 import { useSocketOn } from '../hooks/useSocketOn';
 import { ISidebarItem } from '../components/Sidebar/SidebarItem.vue';
 import { ITreeView } from '../components/TreeView/TreeView.vue';
 import { ITreeViewItem } from '../components/TreeView/TreeViewItem.vue';
-import LoggingService from '../../../../../libs/api/src/lib/service/LoggingService';
 import { File } from '../../../../../libs/api/src/lib/models/File';
 
-const socket = getSocketIOService();
+const socketService = SocketIOService.getInstance();
+
 const selectedFile = ref<File>();
-const isConnected = useSocketOn('CONNECT', false, true);
 const fileContent = useSocketOn('GET_FILE_CONTENT', {});
 const localFiles = useSocketOn('GET_FILES', []);
-const sidebarItems = ref<ISidebarItem[]>([]);
-const treeViewItems = ref<ITreeView>();
 
-const loggingService = LoggingService.getInstance();
-const socketService = SocketIOService.getInstance();
+const treeViewItems = computed<ITreeView>(() => {
+  const content = fileContent.value;
+  return {
+    children: generateTreeViewItemList(content),
+  };
+});
+
+const sidebarItems = computed<ISidebarItem[]>(() => {
+  const files: File[] = localFiles.value;
+  if (files.length > 0) {
+    return files.map((file) => {
+      return {
+        label: file.filename.split('.')[0],
+        id: file,
+      };
+    });
+  }
+  return [];
+});
 
 onMounted(() => {
   socketService.emitEvent('GET_FILES');
 });
 
-watch(isConnected, () => {
-  loggingService.info(
-    'HomeView',
-    'isConnected',
-    'Success while connecting to backend.'
-  );
-});
-
-watch(localFiles, (value: File[]) => {
-  mapStringToSidebarItemList(value);
-});
-
-watch(fileContent, mapFileContentToTreeView);
-
-watch(selectedFile, () => {
-  socketService.emitEvent('GET_FILE_CONTENT', {
-    filename: localFiles.value[0].filename,
-  });
-});
-
-function mapFileContentToTreeView(content: any) {
-  const items: ITreeViewItem = {
-    children: generateTreeViewItemList(content),
-  };
-  treeViewItems.value = items;
-}
-
 function generateTreeViewItemList(content: any): ITreeViewItem {
   const keys = Object.keys(content);
-  const items: ITreeViewItem = keys.map((key) => {
+  return keys.map((key) => {
     return {
       label: key,
       isOpen: false,
@@ -66,29 +50,13 @@ function generateTreeViewItemList(content: any): ITreeViewItem {
         : null,
     };
   });
-  return items;
 }
 
-function mapStringToSidebarItemList(files: File[]) {
-  sidebarItems.value = files.map((file) => {
-    return {
-      label: file.filename.split('.')[0],
-      id: file,
-    };
+function onSidebarItemClick(file: File) {
+  selectedFile.value = file;
+  socketService.emitEvent('GET_FILE_CONTENT', {
+    filename: file.filename,
   });
-}
-
-function getTranslation(file: File) {
-  loggingService.info(
-    'HomeView',
-    'getTranslation',
-    `Get translation for ${file}.`
-  );
-}
-
-function onSidebarItemClick(itemId: File) {
-  selectedFile.value = itemId;
-  getTranslation(itemId);
 }
 </script>
 
