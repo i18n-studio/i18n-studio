@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ITreeView } from "@/components/TreeView/TreeView.vue";
+import type { ITreeView } from '@/components/TreeView/TreeView.vue';
 
 export interface ITreeViewItem {
   label?: string;
@@ -18,12 +18,12 @@ defineProps<ITreeViewItem>();
         v-for="child in children"
         :key="child.label"
         :label="child.label"
-        :is-collapsible="child.isCollapsible"
+        :isCollapsible="child.isCollapsible"
         :children="child.children"
       />
     </div>
     <div v-if="label" class="flex items-center">
-      <font-awesome-icon
+      <FontAwesomeIcon
         v-if="isCollapsible"
         class="p-3 hover:bg-gray-100"
         :icon="

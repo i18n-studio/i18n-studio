@@ -10,12 +10,13 @@ defineEmits(['onItemClick']);
 </script>
 
 <template>
-  <div class="flex flex-col h-full shadow-sm border-r-2">
+  <div class="flex flex-col h-full shadow-sm border-r-2 select-none">
     <SidebarItem
       v-for="item in model"
+      :key="item.id"
       :label="item.label"
       :selected="selected === item.id"
-      @onItemClick="$emit('onItemClick', item.id)"
+      @on-item-click="$emit('onItemClick', item.id)"
     ></SidebarItem>
   </div>
 </template>

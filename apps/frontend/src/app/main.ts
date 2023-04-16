@@ -1,41 +1,23 @@
+// vue
 import { createApp } from 'vue';
-import router from './router/index';
 
-import './assets/main.css';
-
-// Import icon libraries
-import { library } from '@fortawesome/fontawesome-svg-core';
+// packages & libraries
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-/* import specific icons */
-import {
-  faChevronRight,
-  faChevronDown,
-  faSearch,
-  faAdd,
-  faFileCircleCheck,
-  faUndo,
-  faRedo,
-  faBell,
-  faRefresh,
-} from '@fortawesome/free-solid-svg-icons';
+// router
+import router from './router/index';
 
-/* add icons to the library */
-library.add(faChevronRight);
-library.add(faChevronDown);
-library.add(faSearch);
-library.add(faAdd);
-library.add(faFileCircleCheck);
-library.add(faUndo);
-library.add(faRedo);
-library.add(faBell);
-library.add(faRefresh);
-
+// application & styles
 import App from './App.vue';
+import './assets/main.css';
+
+// utility
+import { addIcons } from './icons';
 
 const app = createApp(App);
 app.use(router);
+addIcons();
 
-app.component('font-awesome-icon', FontAwesomeIcon);
+app.component('FontAwesomeIcon', FontAwesomeIcon);
 
 app.mount('#app');

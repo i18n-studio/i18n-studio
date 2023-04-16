@@ -3,6 +3,7 @@ import { RouterView } from 'vue-router';
 import { useSocketOn } from './hooks/useSocketOn';
 import NotificationItem from './components/NotificationItem.vue';
 import { watch } from 'vue';
+import NavigationBar from './components/NavigationBar/NavigationBar.vue';
 
 const isOnline = useSocketOn('CONNECT', false, true);
 
@@ -20,11 +21,9 @@ watch(useSocketOn('DISCONNECT'), () => {
   />
   <section>
     <header>
-      <nav class="flex items-center bg-black text-white h-16 p-4">
-        <h1 class="font-thin text-3xl uppercase p-0 m-0">i18n-Studio</h1>
-      </nav>
+      <NavigationBar />
     </header>
-    <main>
+    <main class="h-screen">
       <RouterView />
     </main>
   </section>
