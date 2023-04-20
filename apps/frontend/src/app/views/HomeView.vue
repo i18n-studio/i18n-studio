@@ -35,7 +35,7 @@ const notifications = computed<INotification[]>(() => {
   });
 });
 
-const treeViewItems = computed<ITreeViewItem>(() => {
+const treeViewItems = computed<ITreeView>(() => {
   const content = fileContent.value;
   if (content) {
     return {
@@ -71,11 +71,10 @@ function generateTreeViewItemList(content: {
   [key: string]: any;
 }): ITreeViewItem {
   const keys = Object.keys(content);
-  return keys.map((key) => {
+  return keys.map((key, index) => {
     return {
+      id: `${key}_${index}`,
       label: key,
-      isOpen: false,
-      isCollapsible: typeof content[key] === 'object',
       children:
         typeof content[key] === 'object'
           ? generateTreeViewItemList(content[key])
@@ -110,11 +109,14 @@ function softAnalyze() {
       @on-item-click="selectFile"
     />
     <div class="flex flex-col p-2 w-80 bg-white border-r-2">
-      <div class="flex flex-row justify-between items-center py-2">
+      <div class="flex flex-col py-2">
         <h2 class="font-bold text-xl">Translations</h2>
+        <span class="text-xs font-bold"
+          >Navigate through your translations to edit them.</span
+        >
       </div>
       <Input placeholder="search" />
-      <TreeView v-if="treeViewItems" :model="treeViewItems" />
+      <TreeView v-if="treeViewItems !== undefined" :model="treeViewItems" />
     </div>
     <main class="flex bg-gray-100 w-screen">
       <I18nViewer

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ViewTypeEditor, ViewTypeJson } from './types';
+import JsonView from './JsonView.vue';
 
 interface Ii18nViewer {
   content?: object;
@@ -25,8 +26,9 @@ defineEmits(['onViewChange']);
         ></Button>
       </ButtonGroup>
     </header>
-    <main>
-      <pre v-if="content && isJsonView" class="px-4">{{ content }}</pre>
+    <main v-if="content" class="m-4 shadow-sm border">
+      <JsonView :json="content" />
+      <!--      <pre v-if="content && isJsonView" class="px-4">{{ content }}</pre>-->
     </main>
   </section>
 </template>
