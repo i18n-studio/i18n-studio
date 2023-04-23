@@ -1,1 +1,15 @@
-{"hello":"Hallo","colors":{"red":"rot","blue":"blau","background":{"green":"Grün"}},"titles":{"example1":"Foo","example2":"Bar"},"bye":"sdsdsd"}
+{
+  "hello": "Hallo",
+  "colors": {
+    "red": "rot",
+    "blue": "blau",
+    "background": {
+      "green": "Grün"
+    }
+  },
+  "titles": {
+    "example1": "Foo",
+    "example2": "Bar"
+  },
+  "bye": "sdsdsd"
+}
