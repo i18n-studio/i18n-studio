@@ -13,6 +13,12 @@ i18n-Studio is a self-hosted solution for managing translation files. It helps w
 > This project is currently a work in progress. The above features
 do not yet correspond to the project, and are only planned.
 
+## What is i18n?
+
+i18n is a commonly used abbreviation for internationalization. The "i" represents the first letter of the word, followed by 18 letters representing the number of letters between the first and last letter of the word, and the "n" represents the last letter of the word. Internationalization refers to the process of designing and developing products, services, and systems that can be adapted to meet the cultural, linguistic, and legal requirements of different countries and regions around the world.
+
+The aim of i18n-studio is to simplify the management of translations in software projects.
+
 ## Understand this workspace
 
 The workspace is a monorepo that uses [NX](https://nx.dev/). Run `nx graph` to see a diagram of the
