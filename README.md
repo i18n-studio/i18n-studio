@@ -4,14 +4,14 @@
 
 ![logo](./.github/assets/logo-with-slogan.png)
 
-i18n-Studio is a self-hosted solution for managing translation files. It helps with:
+i18n-Studio is a self-hosted solution designed to make managing translation files easy. With i18n-Studio, you can:
 
-* **file analyzing**: Analysis of the translation files for errors or different keys.
-* **adding translations**: Add translations across multiple files via a UI to prevent errors.
-* **provide translations**: Provide translations for your application via a modern REST API.
+* **Analyze translation files**: Quickly identify errors or discrepancies in your translation files using our built-in analysis tools.
+* **Add translations**: With our user-friendly interface, you can easily add translations across multiple files and avoid making errors.
+* **Provide translations**: i18n-Studio offers a modern REST API that allows you to provide translations for your application with ease.
 
-> This project is currently a work in progress. The above features
-do not yet correspond to the project, and are only planned.
+> Please note that this project is currently a work in progress. The features mentioned 
+above are still in the planning phase and do not yet correspond to the project.
 
 ## What is i18n?
 
