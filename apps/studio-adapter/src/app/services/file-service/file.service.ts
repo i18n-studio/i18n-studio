@@ -46,6 +46,6 @@ export class FileService {
   }
 
   updateFile(filePath: string, content: string) {
-    fs.writeFileSync(filePath, JSON.stringify(content));
+    fs.writeFileSync(filePath, JSON.stringify(content), 'utf8');
   }
 }

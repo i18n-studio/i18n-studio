@@ -77,6 +77,7 @@
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",
+    "mock-fs": "^5.2.0",
     "nx": "15.9.2",
     "nx-vue3-vite": "^0.24.0",
     "picocolors": "1.0.0",
