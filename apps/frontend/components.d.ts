@@ -21,7 +21,6 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/app/components/Sidebar/Sidebar.vue')['default']
     SidebarItem: typeof import('./src/app/components/Sidebar/SidebarItem.vue')['default']
-    SvgIcon: typeof import('./src/app/components/SvgIcon.vue')['default']
     Toolbar: typeof import('./src/app/components/Toolbar/Toolbar.vue')['default']
     TreeView: typeof import('./src/app/components/TreeView/TreeView.vue')['default']
     TreeViewItem: typeof import('./src/app/components/TreeView/TreeViewItem.vue')['default']
