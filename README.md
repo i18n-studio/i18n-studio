@@ -1,6 +1,6 @@
 # i18n-studio
 
-[![test & check packages](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/dominique-boerner/i18n-studio/actions/workflows/nodejs.yaml)
+[![test & check packages](https://github.com/i18n-studio/i18n-studio/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/i18n-studio/i18n-studio/actions/workflows/nodejs.yaml)
 
 ![logo](./.github/assets/logo-with-slogan.png)
 
