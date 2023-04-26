@@ -81,4 +81,22 @@ describe('FileService', () => {
       expect(content).toContain(newContent);
     });
   });
+
+  describe('createFile', () => {
+    it('should create a new fr.json', () => {
+      fileService.createFile(mockDir, 'fr.json');
+      const fileExists = fs.existsSync(`${mockDir}/fr.json`);
+      const content = fs.readFileSync(`${mockDir}/fr.json`, 'utf8');
+      expect(fileExists).toBeTruthy();
+      expect(content).toContain('{}');
+    });
+
+    it('should not create a already existing file', () => {
+      fileService.createFile(mockDir, 'en.json');
+      const fileExists = fs.existsSync(`${mockDir}/en.json`);
+      const content = fs.readFileSync(`${mockDir}/en.json`, 'utf8');
+      expect(fileExists).toBeTruthy();
+      expect(content).toContain('{ "hello": "Hello" }');
+    });
+  });
 });

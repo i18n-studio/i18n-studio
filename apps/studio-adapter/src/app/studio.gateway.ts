@@ -18,7 +18,7 @@ import TranslationService from './services/translation-service/translation.servi
 export class StudioGateway {
   private static readonly NAME = 'StudioGateway';
 
-  private readonly filePath = this.configService.getConfig().dir;
+  private readonly translationDir = this.configService.getConfig().dir;
 
   private readonly logger: LoggingService = LoggingService.getInstance();
 
@@ -72,7 +72,7 @@ export class StudioGateway {
       'handleFiles',
       'Get every translation file.'
     );
-    const files = this.fileService.getFiles(this.filePath);
+    const files = this.fileService.getFiles(this.translationDir);
     const filteredFiles = this.fileService.filterFiles(files, '.json');
     this.server.emit('files', filteredFiles);
   }
@@ -97,7 +97,7 @@ export class StudioGateway {
       `Get content of file ${filename}.`
     );
     const file = this.fileService.getFileContent(
-      `${this.filePath}/${filename}`
+      `${this.translationDir}/${filename}`
     );
     this.server.emit('fileContent', file);
   }
@@ -128,12 +128,25 @@ export class StudioGateway {
       `Add translation ${key}:${value} to ${filename}.`
     );
 
-    const file = `${this.filePath}/${filename}`;
+    const file = `${this.translationDir}/${filename}`;
     this.translationService.addTranslation(file, key, value);
     const fileContent = this.fileService.getFileContent(
-      `${this.filePath}/${filename}`
+      `${this.translationDir}/${filename}`
     );
     this.server.emit('addTranslation', fileContent);
+  }
+
+  @SubscribeMessage('addTranslationFile')
+  public handleAddTranslationFile(@MessageBody('filename') filename: string) {
+    this.logger.info(
+      StudioGateway.NAME,
+      'handleAddTranslationFile',
+      `Create translation file ${filename}.`
+    );
+
+    const success = this.fileService.createFile(this.translationDir, filename);
+
+    this.server.emit('addTranslationFile', success);
   }
 
   /**

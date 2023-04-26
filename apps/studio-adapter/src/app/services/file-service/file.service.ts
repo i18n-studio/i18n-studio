@@ -45,7 +45,34 @@ export class FileService {
     return files.filter((File) => File.filenameMatching(filter));
   }
 
-  updateFile(filePath: string, content: string) {
+  public updateFile(filePath: string, content: string) {
     fs.writeFileSync(filePath, JSON.stringify(content), 'utf8');
+  }
+
+  /**
+   * Creates a new file on a specific path.
+   * @param filePath {string} - folder, in which the file should be created
+   * @param filename {string} - the name of the file
+   * @param defaultContent {string|object} - the default content of the file
+   * @return true, if the file can be created, false if file already exists.
+   */
+  public createFile(
+    filePath: string,
+    filename: string,
+    defaultContent: string | object = {}
+  ): boolean {
+    const path = `${filePath}/${filename}`;
+    console.log(path);
+    if (!fs.existsSync(path)) {
+      fs.writeFileSync(
+        path,
+        typeof defaultContent === 'object'
+          ? JSON.stringify(defaultContent)
+          : defaultContent,
+        'utf8'
+      );
+      return true;
+    }
+    return false;
   }
 }

@@ -120,7 +120,7 @@ can be extended at any time.
 | Serve via docker                             | ️          | [Issue #1](https://github.com/dominique-boerner/i18n-studio/issues/1]) |
 | Backend: get all files                       | ✔️         |                                                                        |
 | Backend: get file content                    | ✔️         |                                                                        |
-| Backend: create new translation files        |            | [Issue #2](https://github.com/dominique-boerner/i18n-studio/issues/2]) |
+| Backend: create new translation files        | ✔️         | [Issue #2](https://github.com/dominique-boerner/i18n-studio/issues/2]) |
 | Backend: create new translations             | ✔️         |                                                                        |
 | Backend: update translation files            |            | [Issue #3](https://github.com/dominique-boerner/i18n-studio/issues/3]) |
 | Backend: update translations                 |            | [Issue #4](https://github.com/dominique-boerner/i18n-studio/issues/4]) |
