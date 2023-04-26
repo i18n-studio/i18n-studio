@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "postinstall": "node .\\tools\\workplace-setup\\setup.js",
     "build:frontend": "nx build frontend",
     "check-packages": "check-packages --blacklist",
     "docker:compose": "docker compose build && docker compose up",

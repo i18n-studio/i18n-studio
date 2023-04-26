@@ -1,7 +1,7 @@
 import { FileService } from './file.service';
 import { File } from '../../../../../../libs/api/src/lib/models/File';
 import { Test } from '@nestjs/testing';
-import mock from 'mock-fs';
+import mockfs from 'mock-fs';
 import * as fs from 'fs';
 
 describe('FileService', () => {
@@ -13,7 +13,7 @@ describe('FileService', () => {
       providers: [FileService],
     }).compile();
 
-    mock({
+    mockfs({
       [mockDir]: {
         'de.json': '{}',
         'en.json': '{ "hello": "Hello" }',
@@ -22,6 +22,13 @@ describe('FileService', () => {
 
     fileService = moduleRef.get<FileService>(FileService);
   });
+
+  /**
+   * We need to restore the filesystem after every test, because else
+   * we run into problems:
+   * https://stackoverflow.com/a/69000375/14472993
+   */
+  afterEach(() => mockfs.restore());
 
   describe('getFiles', () => {
     it('should get all files', () => {
