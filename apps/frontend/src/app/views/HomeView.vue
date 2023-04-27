@@ -10,6 +10,7 @@ import { File } from '../../../../../libs/api/src/lib/models/File';
 import { AnalyzeResult } from '../../../../../libs/api/src/lib/models/AnalyzeResult';
 import I18nViewer from '../components/I18nViewer/i18nViewer.vue';
 import { ViewType, ViewTypeJson } from '../components/I18nViewer/types';
+import AdapterResponse from '../../../../../libs/api/src/lib/models/AdapterResponse';
 
 const socketService = SocketIOService.getInstance();
 
@@ -18,12 +19,15 @@ const viewType = ref<ViewType>('editor');
 const notificationVisible = ref<boolean>(true);
 
 const isConnected = useSocketOn('CONNECT', false, true);
-const fileContent = useSocketOn('GET_FILE_CONTENT', null);
-const localFiles = useSocketOn('GET_FILES', []);
-const softAnalyzeResults = useSocketOn('SOFT_ANALYZE', []);
+const fileContent = useSocketOn<AdapterResponse<any>>('GET_FILE_CONTENT', null);
+const localFiles = useSocketOn<AdapterResponse<File[]>>('GET_FILES', []);
+const softAnalyzeResults = useSocketOn<AdapterResponse<AnalyzeResult[]>>(
+  'SOFT_ANALYZE',
+  []
+);
 
 const notifications = computed<INotification[]>(() => {
-  const analyzeResults: AnalyzeResult[] = softAnalyzeResults.value;
+  const analyzeResults: AnalyzeResult[] = softAnalyzeResults.value.data ?? [];
 
   return analyzeResults.map((result) => {
     return {
@@ -36,7 +40,7 @@ const notifications = computed<INotification[]>(() => {
 });
 
 const treeViewItems = computed<ITreeView>(() => {
-  const content = fileContent.value;
+  const content = fileContent?.value;
   if (content) {
     return {
       children: generateTreeViewItemList(content),
@@ -46,8 +50,8 @@ const treeViewItems = computed<ITreeView>(() => {
 });
 
 const sidebarItems = computed<ISidebarItem[]>(() => {
-  const files: File[] = localFiles.value;
-  if (files.length > 0) {
+  const files: File[] = localFiles.value.data;
+  if (files && files.length > 0) {
     return files.map((file) => {
       return {
         label: file.filename.split('.')[0],
@@ -64,7 +68,7 @@ onMounted(() => {
 });
 
 watch(localFiles, () => {
-  selectFile(localFiles.value[0].filename);
+  selectFile(localFiles.value.data[0].filename);
 });
 
 function generateTreeViewItemList(content: {

@@ -9,6 +9,11 @@ import { ConfigService } from './services/config-service/config.service';
 import LoggingService from '../../../../libs/api/src/lib/service/LoggingService';
 import AnalyzerService from './services/analyzer-service/analyzer.service';
 import TranslationService from './services/translation-service/translation.service';
+import { HttpStatus } from '@nestjs/common';
+import { Config } from './models/Config';
+import { File } from '../../../../libs/api/src/lib/models/File';
+import { AnalyzeResult } from '../../../../libs/api/src/lib/models/AnalyzeResult';
+import AdapterResponse from '../../../../libs/api/src/lib/models/AdapterResponse';
 
 /**
  * Socket.io Gateway for the adapter.
@@ -51,7 +56,11 @@ export class StudioGateway {
       'handleConfig',
       `Get configuration: ${JSON.stringify(config)}`
     );
-    this.server.emit('config', config);
+    const response: AdapterResponse<Config> = {
+      statusCode: HttpStatus.OK,
+      data: config,
+    };
+    this.server.emit('config', response);
   }
 
   /**
@@ -74,7 +83,11 @@ export class StudioGateway {
     );
     const files = this.fileService.getFiles(this.translationDir);
     const filteredFiles = this.fileService.filterFiles(files, '.json');
-    this.server.emit('files', filteredFiles);
+    const response: AdapterResponse<File[]> = {
+      statusCode: HttpStatus.OK,
+      data: filteredFiles,
+    };
+    this.server.emit('files', response);
   }
 
   /**
@@ -133,7 +146,11 @@ export class StudioGateway {
     const fileContent = this.fileService.getFileContent(
       `${this.translationDir}/${filename}`
     );
-    this.server.emit('addTranslation', fileContent);
+    const response: AdapterResponse<any> = {
+      statusCode: HttpStatus.OK,
+      data: fileContent,
+    };
+    this.server.emit('addTranslation', response);
   }
 
   @SubscribeMessage('addTranslationFile')
@@ -145,8 +162,12 @@ export class StudioGateway {
     );
 
     const success = this.fileService.createFile(this.translationDir, filename);
+    const response: AdapterResponse<any> = {
+      statusCode: HttpStatus.OK,
+      data: success,
+    };
 
-    this.server.emit('addTranslationFile', success);
+    this.server.emit('addTranslationFile', response);
   }
 
   /**
@@ -164,6 +185,10 @@ export class StudioGateway {
   @SubscribeMessage('softAnalyze')
   public handleSoftAnalyze() {
     const result = this.analyzerService.softAnalyze();
-    this.server.emit('softAnalyze', result);
+    const response: AdapterResponse<AnalyzeResult[]> = {
+      statusCode: HttpStatus.OK,
+      data: result,
+    };
+    this.server.emit('softAnalyze', response);
   }
 }
