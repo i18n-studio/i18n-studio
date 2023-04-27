@@ -1,9 +1,6 @@
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { SocketEvent, SocketEventType } from '../socket.event';
-import {
-  getSocketIOService,
-  SocketIOService,
-} from '../service/SocketIOService';
+import { SocketIOService } from '../service/SocketIOService';
 import LoggingService from '../../../../../libs/api/src/lib/service/LoggingService';
 
 /**
@@ -14,11 +11,11 @@ import LoggingService from '../../../../../libs/api/src/lib/service/LoggingServi
  * @param successCallback the success callback, useful if the server
  *                        doesn't send any callback (e. g. on connect).
  */
-export const useSocketOn = (
+export const useSocketOn = <T = any>(
   socketEvent: SocketEventType,
   defaultValue?: any,
   successCallback?: boolean
-): any => {
+): Ref<T> => {
   const socketIOService = SocketIOService.getInstance();
   const loggingService = LoggingService.getInstance();
 
@@ -28,7 +25,7 @@ export const useSocketOn = (
 
   if (!event) {
     loggingService.error('useSocketOn', socketEvent, 'Event is undefined.');
-    return;
+    throw null;
   }
 
   socketIOService.socket.on(event, (res: any) => {
