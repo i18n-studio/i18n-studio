@@ -112,7 +112,11 @@ export class StudioGateway {
     const file = this.fileService.getFileContent(
       `${this.translationDir}/${filename}`
     );
-    this.server.emit('fileContent', file);
+    const response: AdapterResponse<File[]> = {
+      statusCode: HttpStatus.OK,
+      data: file,
+    };
+    this.server.emit('fileContent', response);
   }
 
   /**

@@ -2,7 +2,7 @@ module.exports = {
   displayName: 'frontend',
   globals: {
     'vue-jest': {
-      tsConfig: './apps/frontend/tsconfig.spec.json',
+      tsConfig: '<rootDir>/tsconfig.spec.json',
     },
   },
   transform: {
