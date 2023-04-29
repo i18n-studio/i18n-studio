@@ -117,14 +117,14 @@ can be extended at any time.
 |----------------------------------------------|------------|------------------------------------------------------------------------|
 | Set up repository                            | ✔️         |                                                                        |
 | Set up basic CI Pipeline                     | ✔️         |                                                                        |
-| Serve via docker                             | ️          | [Issue #1](https://github.com/dominique-boerner/i18n-studio/issues/1]) |
+| Serve via docker                             | ️          | [Issue #1](https://github.com/i18n-studio/i18n-studio/issues/1])        |
 | Backend: get all files                       | ✔️         |                                                                        |
 | Backend: get file content                    | ✔️         |                                                                        |
-| Backend: create new translation files        | ✔️         | [Issue #2](https://github.com/dominique-boerner/i18n-studio/issues/2]) |
+| Backend: create new translation files        | ✔️         | [Issue #2](https://github.com/i18n-studio/i18n-studio/issues/2])       |
 | Backend: create new translations             | ✔️         |                                                                        |
-| Backend: update translation files            |            | [Issue #3](https://github.com/dominique-boerner/i18n-studio/issues/3]) |
-| Backend: update translations                 |            | [Issue #4](https://github.com/dominique-boerner/i18n-studio/issues/4]) |
-| Backend: remove translation files            |            | TDB                                                                    |
+| Backend: update translation files            |            | [Issue #3](https://github.com/i18n-studio/i18n-studio/issues/3])       |
+| Backend: update translations                 |            | [Issue #4](https://github.com/i18n-studio/i18n-studio/issues/4])       |
+| Backend: remove translation files            |            | [Issue #16](https://github.com/i18n-studio/i18n-studio/issues/16)      |
 | Backend: remove translations                 |            | TDB                                                                    |
 | Backend: configuration                       | ✔️         |                                                                        |
 | Backend: analyze files: soft                 | ✔️         |                                                                        |
