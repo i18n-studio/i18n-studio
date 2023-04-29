@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
 import { SocketIOService } from '../service/SocketIOService';
-import { useSocketOn } from '../hooks/useSocketOn';
+import { useSocketOn } from '../hooks/useSocketOn/useSocketOn';
 import { ISidebarItem } from '../components/Sidebar/SidebarItem.vue';
 import { ITreeView } from '../components/TreeView/TreeView.vue';
 import { ITreeViewItem } from '../components/TreeView/TreeViewItem.vue';
@@ -10,7 +10,7 @@ import { File } from '../../../../../libs/api/src/lib/models/File';
 import { AnalyzeResult } from '../../../../../libs/api/src/lib/models/AnalyzeResult';
 import I18nViewer from '../components/I18nViewer/i18nViewer.vue';
 import { ViewType, ViewTypeJson } from '../components/I18nViewer/types';
-import AdapterResponse from '../../../../../libs/api/src/lib/models/AdapterResponse';
+import { SocketEvents } from '../socket.event';
 
 const socketService = SocketIOService.getInstance();
 
@@ -18,16 +18,16 @@ const selectedFile = ref<string>();
 const viewType = ref<ViewType>('editor');
 const notificationVisible = ref<boolean>(true);
 
-const isConnected = useSocketOn('CONNECT', false, true);
-const fileContent = useSocketOn<AdapterResponse<any>>('GET_FILE_CONTENT', null);
-const localFiles = useSocketOn<AdapterResponse<File[]>>('GET_FILES', []);
-const softAnalyzeResults = useSocketOn<AdapterResponse<AnalyzeResult[]>>(
-  'SOFT_ANALYZE',
+const isConnected = useSocketOn(SocketEvents.CONNECT, false, true);
+const fileContent = useSocketOn<any>(SocketEvents.GET_FILE_CONTENT);
+const localFiles = useSocketOn<File[]>(SocketEvents.GET_FILES, []);
+const softAnalyzeResults = useSocketOn<AnalyzeResult[]>(
+  SocketEvents.SOFT_ANALYZE,
   []
 );
 
 const notifications = computed<INotification[]>(() => {
-  const analyzeResults: AnalyzeResult[] = softAnalyzeResults.value.data ?? [];
+  const analyzeResults: AnalyzeResult[] = softAnalyzeResults.value.data;
 
   return analyzeResults.map((result) => {
     return {
@@ -40,7 +40,7 @@ const notifications = computed<INotification[]>(() => {
 });
 
 const treeViewItems = computed<ITreeView>(() => {
-  const content = fileContent?.value;
+  const content = fileContent.value;
   if (content) {
     return {
       children: generateTreeViewItemList(content),
@@ -63,12 +63,14 @@ const sidebarItems = computed<ISidebarItem[]>(() => {
 });
 
 onMounted(() => {
-  socketService.emitEvent('GET_FILES');
+  socketService.emitEvent(SocketEvents.GET_FILES);
   softAnalyze();
 });
 
 watch(localFiles, () => {
-  selectFile(localFiles.value.data[0].filename);
+  if (localFiles.value.data) {
+    selectFile(localFiles.value.data[0].filename);
+  }
 });
 
 function generateTreeViewItemList(content: {
@@ -89,13 +91,13 @@ function generateTreeViewItemList(content: {
 
 function selectFile(file: string) {
   selectedFile.value = file;
-  socketService.emitEvent('GET_FILE_CONTENT', {
+  socketService.emitEvent(SocketEvents.GET_FILE_CONTENT, {
     filename: file,
   });
 }
 
 function softAnalyze() {
-  socketService.emitEvent('SOFT_ANALYZE');
+  socketService.emitEvent(SocketEvents.SOFT_ANALYZE);
 }
 </script>
 
@@ -124,9 +126,9 @@ function softAnalyze() {
     </div>
     <main class="flex bg-gray-100 w-screen">
       <I18nViewer
-        v-if="fileContent"
+        v-if="fileContent?.data"
         class="flex-1"
-        :content="fileContent"
+        :content="fileContent.data"
         :isJsonView="viewType === ViewTypeJson"
         @on-view-change="viewType = $event"
       ></I18nViewer>

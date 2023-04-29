@@ -1,6 +1,6 @@
 import type { Socket } from 'socket.io-client';
 import { io } from 'socket.io-client';
-import { SocketEvent, SocketEventType } from '../socket.event';
+import { SocketEvents } from '../socket.event';
 
 /**
  * Service which handles the socket.io connection.
@@ -24,13 +24,8 @@ export class SocketIOService {
     return this.instance;
   }
 
-  public emitEvent(eventType: SocketEventType, options?: any) {
-    const event = this.getSocketEvent(eventType);
+  public emitEvent(event: SocketEvents, options?: any) {
     options ? this.socket.emit(event, options) : this.socket.emit(event);
-  }
-
-  public getSocketEvent(type: SocketEventType): string {
-    return SocketEvent.get(type) ?? '';
   }
 }
 

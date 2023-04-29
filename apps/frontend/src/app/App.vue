@@ -1,20 +1,25 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { useSocketOn } from './hooks/useSocketOn';
+import { useSocketOn } from './hooks/useSocketOn/useSocketOn';
 import NotificationItem from './components/NotificationItem.vue';
 import { watch } from 'vue';
 import NavigationBar from './components/NavigationBar/NavigationBar.vue';
+import { SocketEvents } from './socket.event';
+import { HttpStatus } from '@nestjs/common';
 
-const isOnline = useSocketOn('CONNECT', false, true);
+const isConnected = useSocketOn(SocketEvents.CONNECT, true, true);
 
-watch(useSocketOn('DISCONNECT'), () => {
-  isOnline.value = false;
+watch(useSocketOn(SocketEvents.DISCONNECT), () => {
+  isConnected.value = {
+    statusCode: HttpStatus.NOT_FOUND,
+    data: false,
+  };
 });
 </script>
 
 <template>
   <NotificationItem
-    v-if="!isOnline"
+    v-if="!isConnected.data"
     title="Online status"
     text="No connection to adapter established."
     severity="error"
